@@ -8,6 +8,12 @@
   --card-bg: #1f2833;
 }
 
+/* 2. FIX TOP BAR OVERFLOW (Global Fix) */
+/* This ensures padding doesn't add to the width */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background-color: var(--bg-color);
@@ -36,13 +42,16 @@ body {
   overflow-x: hidden;
   padding-bottom: 50px;
   scroll-behavior: smooth;
+  
+  /* 3. INVISIBLE SCROLLBAR */
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE/Edge */
 }
 
-/* Custom Scrollbar */
-.page-container::-webkit-scrollbar { width: 8px; }
-.page-container::-webkit-scrollbar-track { background: transparent; }
-.page-container::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-.page-container::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+/* 3. INVISIBLE SCROLLBAR (Chrome/Safari) */
+.page-container::-webkit-scrollbar { 
+  display: none; 
+}
 
 /* Utilities */
 .mono { font-family: 'JetBrains Mono', monospace; }
@@ -71,15 +80,20 @@ nav a {
 }
 nav a:hover { color: var(--accent); }
 
-/* --- WIDER CONTAINER FOR BIGGER CONTENT --- */
+/* Spacing */
 .container { 
-  max-width: 1200px; /* Increased from 1100px */
+  max-width: 1400px; 
   margin: 0 auto; 
   padding: 0 40px; 
 }
 
 .section { padding: 60px 0; } 
-.highlight { color: var(--accent); }
+
+/* 1. GLOW EFFECT */
+.highlight { 
+  color: var(--accent); 
+  text-shadow: 0 0 10px rgba(102, 252, 241, 0.6), 0 0 20px rgba(102, 252, 241, 0.4);
+}
 
 /* --- SYNTAX HIGHLIGHTING STYLES --- */
 .code-block {

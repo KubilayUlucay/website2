@@ -1,12 +1,12 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Line, Trail } from '@react-three/drei';
+import { Points, PointMaterial, Line, Trail, Float } from '@react-three/drei'; // Added Float
 import * as random from 'maath/random/dist/maath-random.esm';
 import * as THREE from 'three';
 import Tilt from 'react-parallax-tilt';
 import Typewriter from 'typewriter-effect';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, X, Cpu, Image as ImageIcon, ZoomIn, FileText, Code, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, X, Cpu, Image as ImageIcon, ZoomIn, FileText, Code, ChevronLeft, ChevronRight, Download, BookOpen } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -132,10 +132,121 @@ const PROJECTS_DATA = [
     ]
   },
   {
+    id: 'gimbal',
+    title: "3-Axis Servo Gimbal",
+    category: "Mechatronics & Control",
+    align: 'left',
+    shortDesc: "Designed and built a 3-axis camera stabilizer using Arduino Nano and MPU6050. Features custom 3D-printed mechanics and real-time sensor fusion for Roll, Pitch, and Yaw control.",
+    tags: ['Mechatronics', 'Arduino', 'Control Theory', 'CAD Design'],
+    mainImage: "/projects/gimbal/cad-design.png",
+    fullDesc: (
+      <>
+        <p>
+          This project focuses on the design and implementation of a <strong>3-Axis Active Stabilization Gimbal</strong>. 
+          The goal was to create a low-cost, responsive platform capable of counteracting external disturbances to keep a camera or sensor payload level. 
+          The system was modeled in CAD, 3D printed, and powered by a custom control loop on an Arduino Nano.
+        </p>
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>System Architecture:</h3>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>Mechanical Design:</strong> Modified an open-source gimbal design for improved servo mounting and cable management using SolidWorks. 3D printed using PLA.</li>
+          <li><strong>Sensor Fusion:</strong> Utilized an MPU6050 IMU (Accelerometer + Gyroscope) communicating via I2C. Implemented data filtering to reduce sensor noise.</li>
+          <li><strong>Control Logic:</strong> The Arduino reads raw Euler angles from the IMU, maps them to the mechanical limits of the servos (MG996R for torque, SG90 for speed), and applies corrective movements in real-time.</li>
+        </ul>
+      </>
+    ),
+    codeSnippet: null, 
+    slidesEmbed: "https://docs.google.com/presentation/d/e/2PACX-1vThIt3C47TwTCx1Y142x4mTN150O5gyydtt21hLBaCelQMgs0d_CGQl5U_GlxMlkA/embed?start=false&loop=false&delayms=5000",
+    reports: [],
+    gallery: [
+      "/projects/gimbal/cad-design.png",
+      "/projects/gimbal/stabilizer.jpeg",
+      "/projects/gimbal/wiring-top.jpeg",
+      "/projects/gimbal/wiring-back.jpeg",
+      "/projects/gimbal/gimball-side.jpeg",
+      "/projects/gimbal/phone-data.jpeg"
+    ]
+  },
+  {
+    id: 'powerworld',
+    title: "200MW Wind Farm Integration",
+    category: "Power Systems Analysis",
+    align: 'right',
+    shortDesc: "Techno-economic analysis of integrating a 200MW wind farm into a municipal grid. Optimized interconnection points using PowerWorld Simulator to minimize losses and installation costs across 27 topologies.",
+    tags: ['PowerWorld Simulator', 'Grid Integration', 'Techno-Economic Analysis', 'Power Flow'],
+    mainImage: "/projects/powerworld/WindTurbineExp.png",
+    fullDesc: (
+      <>
+        <p>
+          This project focused on the grid integration of a <strong>200 MW Type 3 DFAG Wind Farm</strong> into the Metropolis 69kV transmission system. 
+          The objective was to identify the optimal interconnection strategy that minimized both initial capital expenditure (CAPEX) and long-term operational losses (OPEX) while maintaining grid stability (1.05 pu voltage setpoint).
+        </p>
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>Optimization Methodology:</h3>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>Topology Analysis:</strong> Simulated 27 different interconnection configurations, testing various combinations of Substations (PAI, PETE, DEMAR) and Conductor types (CROW, CONDOR, ROOK).</li>
+          <li><strong>Load Flow Simulation:</strong> Performed steady-state power flow analysis using <em>PowerWorld Simulator</em> to calculate transmission line loading and system-wide losses for each scenario.</li>
+          <li><strong>Optimal Selection:</strong> Identified "Experiment 9" (PETE/PAI interconnection with CONDOR conductors) as the optimal solution. It reduced system losses significantly compared to the base case while maintaining N-1 contingency reliability.</li>
+          <li><strong>Cost Benefit Analysis:</strong> Calculated the Total Cost of Ownership (Installation + 5-Year Loss Costs), determining a final project valuation of ~$55M.</li>
+        </ul>
+      </>
+    ),
+    codeSnippet: null,
+    slidesEmbed: null,
+    reports: [
+        { title: "Analysis & Financial Report", src: "/projects/powerworld/101-analysis.pdf" },
+        { title: "Experimental Logs & Topologies", src: "/projects/powerworld/101-experiments.pdf" }
+    ],
+    gallery: [
+      "/projects/powerworld/WindTurbineExp.png"
+    ]
+  },
+  {
+    id: 'plc',
+    title: "Industrial Automation Systems",
+    category: "Automation & Control",
+    align: 'left',
+    shortDesc: "A dual-system industrial automation project utilizing Siemens S7-1200 PLCs. Developed ladder logic for a complex Traffic Light Controller and a gamified 3-axis Toy Claw Machine with HMI integration.",
+    tags: ['Siemens TIA Portal', 'Ladder Logic', 'HMI Design', 'PLC Programming'],
+    mainImage: "/projects/plc/plc.jpg", 
+    fullDesc: (
+      <>
+        <p>
+          This project demonstrates proficiency in industrial control systems using the <strong>Siemens TIA Portal</strong> environment. 
+          It consists of two distinct subsystems designed to simulate real-world automation challenges, emphasizing structured programming and Human-Machine Interface (HMI) design.
+        </p>
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>Subsystem 1: Traffic Light Controller</h3>
+        <p>
+          Designed a fail-safe traffic management system with multiple operating modes. Features include:
+        </p>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>State Machine Logic:</strong> Implemented "Normal" (Red-Yellow-Green sequence) and "After-Hours" (Blinking Yellow/Red) modes based on a real-time clock.</li>
+          <li><strong>Pedestrian Integration:</strong> Added interrupt-based logic for pedestrian crossing buttons.</li>
+        </ul>
+
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>Subsystem 2: Toy Claw Machine</h3>
+        <p>
+          Developed a gamified 3-axis control system simulating an arcade claw machine.
+        </p>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>Axis Control:</strong> Programmed logic for X/Y/Z movement using HMI directional buttons.</li>
+          <li><strong>Game Logic:</strong> Implemented a "Coin Insert" system (Credit > 0) and a randomized "Win Probability" algorithm to determine if the claw retains the prize.</li>
+          <li><strong>HMI Design:</strong> Created a user-friendly touch interface for operators to control the claw, view credits, and reset the system.</li>
+        </ul>
+      </>
+    ),
+    codeSnippet: null, 
+    slidesEmbed: null,
+    reports: [
+        { title: "PLC Final Project Report", src: "/projects/plc/EE392.pdf" }
+    ],
+    gallery: [
+      "/projects/plc/plc.jpg"
+    ]
+  },
+  {
     id: 'bms',
     title: "Li-ion Battery Management System",
     category: "Power Systems",
-    align: 'left',
+    align: 'right',
     shortDesc: "A comprehensive senior thesis project designing a BMS for Li-ion packs. Features active cell balancing, precise SoC estimation via Coulomb Counting, and STM32-based real-time safety monitoring.",
     tags: ['STM32', 'PCB Design', 'MATLAB/Simulink', 'Power Electronics'],
     mainImage: "/projects/bms/schematic.png",
@@ -169,52 +280,139 @@ const PROJECTS_DATA = [
       "/projects/bms/balancing.png",
       "/projects/bms/simulink.png"
     ]
+  },
+  {
+    id: 'ml-bitcoin',
+    title: "Bitcoin Sentiment Analysis",
+    category: "Machine Learning & NLP",
+    align: 'left',
+    shortDesc: "A financial forecasting model using BERT and Multi-Layer Perceptrons (MLP) to predict Bitcoin price movements based on Twitter sentiment analysis. Achieved 72.7% accuracy.",
+    tags: ['Python', 'BERT', 'Neural Networks', 'Pandas', 'NLP'],
+    mainImage: "/projects/machinelearning/machinelearning.png",
+    fullDesc: (
+      <>
+        <p>
+          This research project investigates the manipulative power of social media on cryptocurrency markets. 
+          We developed a Machine Learning pipeline to analyze thousands of daily Bitcoin-related tweets and correlate them with price fluctuations.
+        </p>
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>Methodology:</h3>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>Data Mining:</strong> Aggregated large-scale Twitter datasets filtered for Bitcoin-related keywords.</li>
+          <li><strong>NLP & Sentiment Extraction:</strong> Utilized the <strong>BERT (Bidirectional Encoder Representations from Transformers)</strong> model to process natural language and assign sentiment scores (Positive/Negative/Neutral) to each tweet.</li>
+          <li><strong>Predictive Modeling:</strong> Fed the aggregated 7-day sentiment averages into a <strong>Multi-Layer Perceptron (MLP)</strong> Neural Network to classify the next day's price action (Up vs. Down).</li>
+          <li><strong>Results:</strong> The model achieved a peak accuracy of <strong>72.7%</strong> on the test set (Hidden Layers: 6, 50; Max Iterations: 10,000), suggesting a quantifiable link between public discourse and market trends.</li>
+        </ul>
+      </>
+    ),
+    codeSnippet: null,
+    slidesEmbed: null,
+    reports: [
+        { title: "CS440 Project Report", src: "/projects/machinelearning/MLPROJECT.pdf" }
+    ],
+    gallery: [
+        "/projects/machinelearning/machinelearning.png"
+    ]
+  },
+  {
+    id: 'deforestation',
+    title: "Deforestation Analysis: Northeastern Turkey",
+    category: "Environmental Research",
+    align: 'right',
+    shortDesc: "A data-driven research initiative analyzing 23-year deforestation trends in the Altındere Valley. Proposed a sustainable protection model (K.O.A.Ş) aligning with UN SDGs 13 & 15 to safeguard endemic flora.",
+    tags: ['Sustainability', 'Policy Analysis', 'Research', 'SDG 13 & 15'],
+    mainImage: "/projects/deforestation/deforestation.jpg",
+    fullDesc: (
+      <>
+        <p>
+          This research paper addresses the critical environmental challenge of deforestation in Northeastern Turkey, specifically within the biodiversity-rich Altındere Valley. 
+          The region hosts <strong>32 endemic plant species</strong> (8.3% of local flora) which are currently at risk due to habitat loss.
+        </p>
+        <h3 className="mono" style={{ color: '#66fcf1', marginTop: '20px', fontSize: '18px' }}>Key Findings & Proposals:</h3>
+        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+          <li><strong>Data Analysis:</strong> Analyzed statistical data (TÜİK 2021) revealing a net decrease of <strong>2.30%</strong> in total forested areas between 1984 and 2007, equating to a loss of 12,506 hectares of productive forest.</li>
+          <li><strong>Ecological Impact:</strong> Identified direct threats to 190 alpine/subalpine species and 9 rare taxa unique to the Black Sea region.</li>
+          <li><strong>Solution Model (K.O.A.Ş):</strong> Proposed the establishment of the "Black Sea Forests Research and Protection Company" (K.O.A.Ş). This model integrates government oversight with privatization efficiency to enforce stricter logging regulations and fund reforestation.</li>
+          <li><strong>Global Alignment:</strong> The framework is designed to meet UN Sustainable Development Goals 13 (Climate Action) and 15 (Life on Land).</li>
+        </ul>
+      </>
+    ),
+    codeSnippet: null,
+    slidesEmbed: "https://docs.google.com/presentation/d/e/2PACX-1vTs1iTZOyWLlFcwJ7tPV_2Iav8qd27jke2rG16l585SUDJBC_bZr1DHIs_xQe8ZuA/embed?start=false&loop=false&delayms=3000",
+    reports: [
+        { title: "Research & Problem Solution Paper", src: "/projects/deforestation/deforestation.pdf" }
+    ],
+    gallery: [
+        "/projects/deforestation/deforestation.jpg"
+    ]
   }
 ];
 
 /* --- 2. COMPONENTS --- */
 
-// Multi-Document PDF Viewer Component (TALLER VERSION)
+// --- NEW COMPONENT: LOOT CARD (For CV & Portfolio) ---
+const LootCard = ({ title, type, file, color }) => (
+  <Tilt glareEnable={true} glareMaxOpacity={0.4} glareColor={color} tiltMaxAngleX={10} tiltMaxAngleY={10}>
+    <motion.a 
+      href={file} 
+      target="_blank"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px',
+        padding: '20px 25px',
+        background: `linear-gradient(135deg, rgba(20,20,20,0.9), rgba(${color === 'gold' ? '60,50,10' : '40,20,60'}, 0.8))`,
+        border: `1px solid ${color === 'gold' ? '#fbbf24' : '#c084fc'}`,
+        borderRadius: '12px',
+        textDecoration: 'none',
+        boxShadow: `0 0 15px rgba(${color === 'gold' ? '251,191,36' : '192,132,252'}, 0.15)`,
+        cursor: 'pointer',
+        minWidth: '280px'
+      }}
+      whileHover={{ scale: 1.05, boxShadow: `0 0 30px rgba(${color === 'gold' ? '251,191,36' : '192,132,252'}, 0.4)` }}
+    >
+      <div style={{
+        background: color === 'gold' ? 'rgba(251,191,36,0.2)' : 'rgba(192,132,252,0.2)',
+        padding: '12px',
+        borderRadius: '50%',
+        display: 'flex', alignItems: 'center', justifyContent: 'center'
+      }}>
+        {type === 'CV' ? <FileText size={24} color={color === 'gold' ? '#fbbf24' : '#c084fc'} /> : <BookOpen size={24} color={color === 'gold' ? '#fbbf24' : '#c084fc'} />}
+      </div>
+      <div>
+        <div className="mono" style={{ fontSize: '10px', color: color === 'gold' ? '#fbbf24' : '#c084fc', letterSpacing: '1px' }}>
+          {type === 'CV' ? 'LEGENDARY ITEM' : 'EPIC ARTIFACT'}
+        </div>
+        <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#fff' }}>{title}</div>
+      </div>
+      <Download size={18} color="#fff" style={{ marginLeft: 'auto', opacity: 0.7 }} />
+    </motion.a>
+  </Tilt>
+);
+
+// Multi-Document PDF Viewer
 const MultiDocViewer = ({ reports }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
   if (!reports || reports.length === 0) return null;
-
   return (
     <div style={{ marginBottom: '80px' }}>
       <h2 className="mono" style={{ fontSize: '24px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: '#fff' }}>
         <FileText /> Technical Documentation
       </h2>
-      
-      {/* Increased height to 850px */}
       <div style={{ display: 'flex', gap: '20px', flexDirection: 'row', height: '850px', alignItems: 'stretch' }}>
-        
-        {/* LEFT: MAIN VIEWER */}
         <div style={{ flex: 3, background: '#222', borderRadius: '8px', border: '1px solid #333', overflow: 'hidden', position: 'relative' }}>
-            <iframe 
-                src={reports[activeIndex].src} 
-                width="100%" 
-                height="100%" 
-                style={{ border: 'none' }} 
-                title={reports[activeIndex].title}
-            />
+            <iframe src={reports[activeIndex].src} width="100%" height="100%" style={{ border: 'none' }} title={reports[activeIndex].title} />
         </div>
-
-        {/* RIGHT: SIDEBAR PREVIEWS */}
         {reports.length > 1 && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px', overflowY: 'auto' }}>
                 {reports.map((report, index) => (
-                    <div 
-                        key={index}
-                        onClick={() => setActiveIndex(index)}
+                    <div key={index} onClick={() => setActiveIndex(index)}
                         style={{ 
                             background: activeIndex === index ? 'rgba(102, 252, 241, 0.15)' : '#1f2833',
                             border: activeIndex === index ? '1px solid #66fcf1' : '1px solid #333',
-                            borderRadius: '8px',
-                            padding: '15px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            opacity: activeIndex === index ? 1 : 0.7
+                            borderRadius: '8px', padding: '15px', cursor: 'pointer', transition: 'all 0.2s', opacity: activeIndex === index ? 1 : 0.7
                         }}
                     >
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
@@ -227,20 +425,14 @@ const MultiDocViewer = ({ reports }) => {
                 ))}
             </div>
         )}
-
       </div>
     </div>
   );
 };
 
-// Syntax Highlighter
 const SyntaxHighlighterComponent = ({ code }) => (
     <div className="code-block" style={{ padding: 0 }}>
-        <SyntaxHighlighter 
-            language="cpp" 
-            style={vscDarkPlus} 
-            customStyle={{ background: '#0d1117', margin: 0, padding: '20px', maxHeight: '600px', overflowY: 'auto', fontSize: '13px' }}
-        >
+        <SyntaxHighlighter language="cpp" style={vscDarkPlus} customStyle={{ background: '#0d1117', margin: 0, padding: '20px', maxHeight: '600px', overflowY: 'auto', fontSize: '13px' }}>
             {code}
         </SyntaxHighlighter>
     </div>
@@ -267,15 +459,19 @@ const ShootingStar = () => {
   );
 };
 
+// --- UPDATED BACKGROUND: NEBULA EFFECTS ---
 const SpaceBackground = (props) => {
   const groupRef = useRef();
   const count = 300;
+  
+  // 1. STARS
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count * 3; i++) { pos[i] = (Math.random() - 0.5) * 4; }
     return pos;
   }, []);
 
+  // 2. CONSTELLATIONS (Lines)
   const linesGeometry = useMemo(() => {
     const points = [];
     for (let i = 0; i < count - 1; i+=2) { 
@@ -287,18 +483,36 @@ const SpaceBackground = (props) => {
     return new THREE.BufferGeometry().setFromPoints(points);
   }, [positions]);
 
+  // 3. NEBULA CLOUDS (Large, colored, transparent particles)
+  const nebulaCount = 20;
+  const nebulaPositions = useMemo(() => {
+    const pos = new Float32Array(nebulaCount * 3);
+    for (let i = 0; i < nebulaCount * 3; i++) { pos[i] = (Math.random() - 0.5) * 6; }
+    return pos;
+  }, []);
+
   useFrame((state, delta) => {
     if (groupRef.current) { groupRef.current.rotation.x -= delta / 15; groupRef.current.rotation.y -= delta / 20; }
   });
 
   return (
     <group ref={groupRef} rotation={[0, 0, Math.PI / 4]}>
+      {/* Stars */}
       <Points positions={positions} stride={3} frustumCulled={false} {...props}>
         <PointMaterial transparent color="#66fcf1" size={0.008} sizeAttenuation={true} depthWrite={false} />
       </Points>
+      {/* Constellation Lines */}
       <lineSegments geometry={linesGeometry}>
-        <lineBasicMaterial color="#66fcf1" transparent opacity={0.15} />
+        <lineBasicMaterial color="#66fcf1" transparent opacity={0.1} />
       </lineSegments>
+      {/* Nebula Layer 1 (Purple) */}
+      <Points positions={nebulaPositions} stride={3} frustumCulled={false} {...props}>
+         <PointMaterial transparent color="#8b5cf6" size={0.2} sizeAttenuation={true} depthWrite={false} opacity={0.2} />
+      </Points>
+      {/* Nebula Layer 2 (Cyan) */}
+      <Points positions={nebulaPositions} stride={3} frustumCulled={false} {...props}>
+         <PointMaterial transparent color="#22d3ee" size={0.3} sizeAttenuation={true} depthWrite={false} opacity={0.1} />
+      </Points>
       <ShootingStar />
     </group>
   );
@@ -326,6 +540,8 @@ const HomePage = ({ onProjectClick }) => {
       </nav>
 
       <div className="container">
+        
+        {/* HERO SECTION */}
         <section className="section" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
           <h1 className="mono" style={{ fontSize: '16px', color: '#66fcf1', marginBottom: '20px' }}>Hi, my name is</h1>
           <h2 style={{ fontSize: '60px', margin: 0, fontWeight: '800' }}>Kubilay Ulucay.</h2>
@@ -333,9 +549,31 @@ const HomePage = ({ onProjectClick }) => {
             <Typewriter options={{ strings: ['I build robots.', 'I design PCBs.', 'I code embedded systems.', 'I solve problems.'], autoStart: true, loop: true, delay: 50, deleteSpeed: 30 }} />
           </h2>
           <p style={{ maxWidth: '500px', marginTop: '30px', fontSize: '18px', lineHeight: '1.6' }}>I am an Electrical & Electronics Engineer specializing in <span className="highlight">Power Systems</span> and <span className="highlight">Robotics</span>. Currently bridging the gap between hardware and software in Istanbul.</p>
-          <div style={{ display: 'flex', gap: '20px', marginTop: '40px' }}><a href="https://github.com/KubilayUlucay" target="_blank" style={{ color: '#fff' }}><Github /></a><a href="https://linkedin.com/in/kubilayulucay" target="_blank" style={{ color: '#fff' }}><Linkedin /></a></div>
+          
+          <div style={{ display: 'flex', gap: '20px', marginTop: '40px', alignItems: 'center' }}>
+            <a href="https://github.com/KubilayUlucay" target="_blank" style={{ color: '#fff' }}><Github /></a>
+            <a href="https://linkedin.com/in/kubilayulucay" target="_blank" style={{ color: '#fff' }}><Linkedin /></a>
+          </div>
+
+          {/* LOOT CARDS SECTION (New) */}
+          <div style={{ display: 'flex', gap: '30px', marginTop: '60px', flexWrap: 'wrap' }}>
+            <LootCard 
+              title="Technical Resume" 
+              type="CV" 
+              file="/documents/CV_DUZ.pdf" 
+              color="gold" 
+            />
+            <LootCard 
+              title="Full Portfolio" 
+              type="Portfolio" 
+              file="/documents/portfolio.pdf" 
+              color="purple" 
+            />
+          </div>
+
         </section>
 
+        {/* PROJECTS SECTION */}
         <section id="projects" className="section">
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '60px' }}><h2 className="mono" style={{ fontSize: '24px', marginRight: '20px' }}><span className="highlight">01.</span> Selected Works</h2><div style={{ height: '1px', background: '#333', flex: 1 }}></div></div>
           {PROJECTS_DATA.map((proj) => (
@@ -454,7 +692,7 @@ export default function App() {
   return (
     <div style={{ position: 'relative', height: '100vh', width: '100vw', overflow: 'hidden' }}>
       
-      {/* STATIC BACKGROUNDS (Fixed outside animation) */}
+      {/* STATIC BACKGROUNDS */}
       <div className="engineering-grid"></div>
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: -1 }}>
         <Canvas camera={{ position: [0, 0, 1] }}>
